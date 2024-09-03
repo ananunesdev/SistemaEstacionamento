@@ -16,7 +16,7 @@ public class ConnectionFactory {
 		try {
 			conexao = DriverManager.getConnection(stringDeConexao, usuario, senha);
 			JOptionPane.showMessageDialog(null, "Conexão Realizada!");
-		} catch (Exception e) {
+		} catch(Exception e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Falha na conexão!");
 		}
