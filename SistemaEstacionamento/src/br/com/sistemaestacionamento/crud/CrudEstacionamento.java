@@ -108,6 +108,36 @@ public class CrudEstacionamento {
 	}
 	
 	public static void update () {
+		try {
+			Connection conexao = ConnectionFactory.createConnection();
+	        Estacionamento estacionamento = new Estacionamento();
+	        
+	        estacionamento.setPlaca(JOptionPane.showInputDialog("Placa do Veículo: "));
+	        estacionamento.setValor(Float.parseFloat(JOptionPane.showInputDialog("Valor do tempo estacionado: ")));
+	        String[] status = {
+	                "[0] Ausente",
+	                "[1] Presente",
+	        };
+	        
+	        String statusSelecionado = (String) JOptionPane.showInputDialog(null, "Selecione o status do veículo: ", "Status do Veículo: ", JOptionPane.QUESTION_MESSAGE, null, status, status[0]); 
+	        
+	        estacionamento.setStatus(statusSelecionado);
+	        
+	        String sql = "UPDATE veiculos SET placa=?, valor=?, status=? WHERE placa=?;";
+	        
+	        PreparedStatement cmd = conexao.prepareStatement(sql);
+	        cmd.setString(1, estacionamento.getPlaca()); 
+	        cmd.setFloat(2, estacionamento.getValor()); 
+	        cmd.setString(3, estacionamento.getStatus()); 
+	        cmd.setString(4, estacionamento.getPlaca()); 
+	        
+	        cmd.execute();
+	        JOptionPane.showMessageDialog(null, "Veículo Atualizado!");
+	        cmd.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
