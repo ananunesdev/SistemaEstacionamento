@@ -2,11 +2,12 @@ package br.com.sistemaestacionamento.crud;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import javax.swing.JOptionPane;
 
-import br.com.sistemaestacionamento.jdbc.ConnectionFactory;
 import br.com.sistemaestacionamento.model.Estacionamento;
+import br.com.sistemaestacionamento.jdbc.ConnectionFactory;
 
 public class CrudEstacionamento {
 	
@@ -42,6 +43,33 @@ public class CrudEstacionamento {
 	}
 	
 	public static void read () {
+		try {
+			Connection conexao = ConnectionFactory.createConnection();
+			
+			Estacionamento estacionamento = new Estacionamento();
+			
+			String sql = "select * from veiculos;";
+			
+			PreparedStatement cmd = conexao.prepareStatement(sql);
+			ResultSet resultado = cmd.executeQuery();
+			
+			String veiculos;
+			
+			veiculos = ".:: VEÍCULOS ENCONTRADOS ::.\n";
+			
+			while(resultado.next()) {
+				veiculos += "ID: " + resultado.getInt("id") 
+						+ "- Placa: " + resultado.getString("placa") 
+						+ "- Valor: " + resultado.getFloat("valor") 
+						+ "- Status: " + resultado.getString("status") 
+						+ "\n ----------------------------------------\n"; 
+			}
+			JOptionPane.showMessageDialog(null, veiculos);
+			cmd.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
 		
 	}
 	
