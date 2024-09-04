@@ -60,8 +60,6 @@ public class CrudEstacionamento {
 			while(resultado.next()) {
 				veiculos += "ID: " + resultado.getInt("id") 
 						+ "- Placa: " + resultado.getString("placa") 
-						+ "- Valor: " + resultado.getFloat("valor") 
-						+ "- Status: " + resultado.getString("status") 
 						+ "\n ----------------------------------------\n"; 
 			}
 			JOptionPane.showMessageDialog(null, veiculos);
@@ -74,6 +72,38 @@ public class CrudEstacionamento {
 	}
 	
 	public static void readone () {
+		try {
+			Connection conexao = ConnectionFactory.createConnection();
+			
+			Estacionamento estacionamento = new Estacionamento();
+			
+			estacionamento.setPlaca(JOptionPane.showInputDialog("Insira a placa: "));
+			
+			String sql = "select * from veiculos where placa = ?;";
+			
+			PreparedStatement cmd = conexao.prepareStatement(sql);
+			cmd.setString(1, estacionamento.getPlaca());
+			ResultSet resultado = cmd.executeQuery();
+		
+			String veiculos;
+		
+			veiculos = ".:: VEÍCULO ENCONTRADO ::.\n";
+		
+			while(resultado.next()) {
+				veiculos += "ID: " + resultado.getInt("id") 
+						+ "- Placa: " + resultado.getString("placa") 
+						+ "\n ----------------------------------------\n"
+						+ "- Valor: " + resultado.getFloat("valor") 
+						+ "- Status: " + resultado.getString("status") 
+						+ "\n ----------------------------------------\n"; 
+				
+			}
+			JOptionPane.showMessageDialog(null, veiculos);
+			cmd.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		
 	}
 	
