@@ -17,9 +17,10 @@ public class CrudEstacionamento {
 			Estacionamento estacionamento = new Estacionamento();
 			
 			estacionamento.setPlaca(JOptionPane.showInputDialog("Placa do Veículo: "));
+			estacionamento.setValor(Float.parseFloat(JOptionPane.showInputDialog("Valor do tempo estacionado: ")));
 			String[] status = {
-					"[0] Ausente",
-					"[1] Presente",
+					"0",
+					"1",
 			};
 			
 			
@@ -27,11 +28,14 @@ public class CrudEstacionamento {
 			
 			estacionamento.setStatus(statusSelecionado);
 			
-			String sql = "INSERT INTO veiculos(placa, status) VALUES (?,?);";
+			String sql = "INSERT INTO veiculos(placa, valor, status) VALUES (?,?,?);";
 			
 			PreparedStatement cmd = conexao.prepareStatement(sql);
 			cmd.setString(1, estacionamento.getPlaca());
-			cmd.setString(2, estacionamento.getStatus());
+			cmd.setFloat(2, estacionamento.getValor());
+			cmd.setString(3, estacionamento.getStatus());
+
+			
 			
 			cmd.execute();
 			JOptionPane.showMessageDialog(null, "Veículo Inserido!");
@@ -41,6 +45,12 @@ public class CrudEstacionamento {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	
+	
+	
+	
 	
 	public static void read () {
 		try {
@@ -95,7 +105,7 @@ public class CrudEstacionamento {
 						+ "\n ----------------------------------------\n"
 						+ "- Valor: " + resultado.getFloat("valor") 
 						+ "- Status: " + resultado.getString("status") 
-						+ "\n ----------------------------------------\n"; 
+						+ "\n ----------------------------------------\n";
 				
 			}
 			JOptionPane.showMessageDialog(null, veiculos);
@@ -115,21 +125,20 @@ public class CrudEstacionamento {
 	        estacionamento.setPlaca(JOptionPane.showInputDialog("Placa do Veículo: "));
 	        estacionamento.setValor(Float.parseFloat(JOptionPane.showInputDialog("Valor do tempo estacionado: ")));
 	        String[] status = {
-	                "[0] Ausente",
-	                "[1] Presente",
+	                "0",
+	                "1",
 	        };
 	        
 	        String statusSelecionado = (String) JOptionPane.showInputDialog(null, "Selecione o status do veículo: ", "Status do Veículo: ", JOptionPane.QUESTION_MESSAGE, null, status, status[0]); 
 	        
 	        estacionamento.setStatus(statusSelecionado);
 	        
-	        String sql = "UPDATE veiculos SET placa=?, valor=?, status=? WHERE placa=?;";
+	        String sql = "UPDATE veiculos SET valor=?, status=? WHERE placa=?;";
 	        
 	        PreparedStatement cmd = conexao.prepareStatement(sql);
-	        cmd.setString(1, estacionamento.getPlaca()); 
-	        cmd.setFloat(2, estacionamento.getValor()); 
-	        cmd.setString(3, estacionamento.getStatus()); 
-	        cmd.setString(4, estacionamento.getPlaca()); 
+	        cmd.setFloat(1, estacionamento.getValor());  // Atualiza o valor
+	        cmd.setString(2, estacionamento.getStatus()); // Atualiza o status
+	        cmd.setString(3, estacionamento.getPlaca());  // Usa a placa no WHERE para encontrar o veículo
 	        
 	        cmd.execute();
 	        JOptionPane.showMessageDialog(null, "Veículo Atualizado!");
@@ -142,6 +151,24 @@ public class CrudEstacionamento {
 	}
 	
 	public static void delete () {
+		try {
+			Connection conexao = ConnectionFactory.createConnection();
+	        Estacionamento estacionamento = new Estacionamento();
+	        
+	        estacionamento.setPlaca(JOptionPane.showInputDialog("Placa do Veículo: "));
+	        String sql = "delete from veiculos where placa = ?;";
+	        
+	        PreparedStatement cmd = conexao.prepareStatement(sql);
+	        cmd.setString(1, estacionamento.getPlaca());
+	        
+	        cmd.execute();
+	        JOptionPane.showMessageDialog(null, "Veículo deletado com sucesso!");
+			cmd.close();
+	        
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
 		
 	}
 }
