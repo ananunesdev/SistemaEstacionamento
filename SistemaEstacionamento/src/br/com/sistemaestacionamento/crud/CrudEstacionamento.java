@@ -17,7 +17,6 @@ public class CrudEstacionamento {
 			Estacionamento estacionamento = new Estacionamento();
 			
 			estacionamento.setPlaca(JOptionPane.showInputDialog("Placa do Veículo: "));
-			estacionamento.setValor(Float.parseFloat(JOptionPane.showInputDialog("Valor do tempo estacionado: ")));
 			String[] status = {
 					"0",
 					"1",
@@ -28,12 +27,11 @@ public class CrudEstacionamento {
 			
 			estacionamento.setStatus(statusSelecionado);
 			
-			String sql = "INSERT INTO veiculos(placa, valor, status) VALUES (?,?,?);";
+			String sql = "INSERT INTO veiculos(placa, status) VALUES (?,?);";
 			
 			PreparedStatement cmd = conexao.prepareStatement(sql);
 			cmd.setString(1, estacionamento.getPlaca());
-			cmd.setFloat(2, estacionamento.getValor());
-			cmd.setString(3, estacionamento.getStatus());
+			cmd.setString(2, estacionamento.getStatus());
 
 			
 			

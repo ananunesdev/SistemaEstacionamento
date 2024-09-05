@@ -1,10 +1,27 @@
 package br.com.sistemaestacionamento.model;
 
+import javax.print.attribute.standard.DateTimeAtCompleted;
+
 public class Estacionamento {
 	private Integer id; 
 	private String placa;
 	private Float valor; 
 	private String status;
+	private DateTimeAtCompleted entrada;
+	public DateTimeAtCompleted getEntrada() {
+		return entrada;
+	}
+	public void setEntrada(DateTimeAtCompleted entrada) {
+		this.entrada = entrada;
+	}
+	public DateTimeAtCompleted getSaida() {
+		return saida;
+	}
+	public void setSaida(DateTimeAtCompleted saida) {
+		this.saida = saida;
+	}
+	private DateTimeAtCompleted saida;
+	
 	
 	public String getStatus() {
 		return status;
