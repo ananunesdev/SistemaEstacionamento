@@ -3,6 +3,9 @@ package br.com.sistemaestacionamento.crud;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JOptionPane;
 
@@ -168,5 +171,36 @@ public class CrudEstacionamento {
 			
 		}
 		
+	}
+	
+	public static void select() {
+		try {
+			Connection conexao = ConnectionFactory.createConnection();
+	        Estacionamento estacionamento = new Estacionamento();
+	        
+	        String sql = "select id, placa from veiculos;";
+	        
+	        PreparedStatement cmd = conexao.prepareStatement(sql);
+	        ResultSet resultado = cmd.executeQuery();
+	        
+	        Map<String, Integer> mapaEstaciones = new HashMap<>();
+	        ArrayList<String> listaPlacas = new ArrayList<>();
+	        
+	        while(resultado.next()) {
+	        	int placaId = resultado.getInt("id");
+	        	String placa = resultado.getString("placa");
+	        	
+	        	listaPlacas.add(placa);
+	        	mapaEstaciones.put(placa, placaId);
+	        }
+	        
+	        String[] placasArray = listaPlacas.toArray(new String [0]);
+	        
+	        String placaSelecionada = (String) JOptionPane.showInputDialog(null, "Selecione a placa: ", "Seleção de Placa", JOptionPane.QUESTION_MESSAGE, null, placasArray, placasArray[0]);
+	        
+	        System.out.print(placaSelecionada);
+		} catch (Exception e) {
+			
+		}
 	}
 }

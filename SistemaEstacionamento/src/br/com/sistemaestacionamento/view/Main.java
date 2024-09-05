@@ -19,6 +19,7 @@ public class Main {
 					"3: Listagem Única \n" +
 					"4: Atualizar Info \n" +
 					"5: Deletar Info \n" +
+					"6: Selecionar Registro \n" +
 					"9: Finalizar Programa \n"
 					));
 			switch(opcao) {
@@ -36,6 +37,9 @@ public class Main {
 			break;
 			case 5:
 				crudEstacionamento.delete();
+			break;
+			case 6:
+				crudEstacionamento.select();
 			break;
 			case 9:
 				 System.exit(0);
