@@ -198,7 +198,12 @@ public class CrudEstacionamento {
 	        
 	        String placaSelecionada = (String) JOptionPane.showInputDialog(null, "Selecione a placa: ", "Seleção de Placa", JOptionPane.QUESTION_MESSAGE, null, placasArray, placasArray[0]);
 	        
-	        System.out.print(placaSelecionada);
+	        if(placaSelecionada != null) {
+	        	System.out.print(placaSelecionada);
+	        }else {
+	        	JOptionPane.showMessageDialog(null, "Nenhuma placa seleionada");
+	        }
+	        
 		} catch (Exception e) {
 			
 		}
